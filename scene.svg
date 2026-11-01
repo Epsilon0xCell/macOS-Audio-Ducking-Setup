@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 260" role="img" aria-label="The pyre waits, the crowd dips at the bell, then the fuse spark runs and the head bursts">
+<defs><linearGradient id="fest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a9aa0"/><stop offset="1" stop-color="#eec48c"/></linearGradient></defs>
+<rect width="1200" height="120" fill="url(#fest)"/>
+<g fill="#5c5a60"><path d="M950 120 V40 l14 -26 14 26 v80 M1030 120 V40 l14 -26 14 26 v80"/></g>
+<rect y="108" width="1200" height="10" fill="#7896aa"/>
+<rect y="118" width="1200" height="142" fill="#aea294"/>
+<g id="crowd"><g fill="#46405a"><rect x="240" y="196" width="12" height="30"/><rect x="290" y="196" width="12" height="30"/><rect x="880" y="196" width="12" height="30"/><rect x="930" y="196" width="12" height="30"/></g><g fill="#d4b698"><circle cx="246" cy="192" r="6"/><circle cx="296" cy="192" r="6"/><circle cx="886" cy="192" r="6"/><circle cx="936" cy="192" r="6"/></g><animateTransform attributeName="transform" type="translate" values="0 0;0 7;0 0;0 0" keyTimes="0;.35;.55;1" dur="16s" repeatCount="indefinite"/></g>
+<path d="M110 60 a10 12 0 1 1 -6 -9 l6 4 6 -4 a10 12 0 0 1 -6 9" fill="#ffd678"><animate attributeName="opacity" values=".2;.2;1;.2;.2" keyTimes="0;.3;.45;.6;1" dur="16s" repeatCount="indefinite"/></path>
+<polygon points="470,226 730,226 600,120" fill="#7a5430"/>
+<g stroke="#5e3f22" stroke-width="5"><path d="M492 206 h216 M516 182 h168 M544 158 h112"/></g>
+<g><ellipse cx="600" cy="98" rx="46" ry="26" fill="#f8f2e4"/><ellipse cx="600" cy="70" rx="34" ry="20" fill="#f8f2e4"/><polygon points="572,66 628,58 630,72 574,80" fill="#2654a0"/><polygon points="594,62 610,60 612,74 596,76" fill="#f6f4ee"/><ellipse cx="600" cy="42" rx="17" ry="13" fill="#faf4e6"/><circle cx="595" cy="40" r="2" fill="#222"/><circle cx="605" cy="40" r="2" fill="#222"/></g>
+<g fill="#e86e1e"><circle r="4"><animateMotion dur="16s" repeatCount="indefinite" path="M330 238 H520 L560 226"/></circle></g>
+<g fill="#f6ead2"><circle cx="600" cy="40" r="6"><animate attributeName="r" values="4;4;22;4" keyTimes="0;.8;.92;1" dur="16s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0;1;0" keyTimes="0;.8;.92;1" dur="16s" repeatCount="indefinite"/></circle></g>
+<g fill="#8a8478"><circle cx="540" cy="240" r="3"><animate attributeName="cy" values="226;246" dur="16s" repeatCount="indefinite"/></circle><circle cx="660" cy="244" r="3"><animate attributeName="cy" values="230;250" dur="16s" repeatCount="indefinite"/></circle></g>
+</svg>

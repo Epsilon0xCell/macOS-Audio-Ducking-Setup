@@ -1,14 +1,24 @@
-![Banner](banner.png)
+![Intro](intro-banner.png)
 
 # macOS-Audio-Ducking-Setup
 
+![Banner](banner.png)
+
+![Scene](scene.svg)
+
 macOS audio ducking setup blackhole + audio hijack
+
+
+![Separator](sep-heavy.svg)
 
 ## What this repo is
 
 This repo is a setup note, not a script. There are no configuration
 files or install commands here beyond the two project links below; the
 steps are manual settings in the two apps.
+
+
+![Separator](sep-heavy.svg)
 
 ## To setup
 
