@@ -3,148 +3,82 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>macOS Audio Ducking Setup: what it is, how it runs, where it stops</title>
-<meta name="description" content="macOS Audio Ducking Setup is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.">
+<title>macOS-Audio-Ducking-Setup: BlackHole first, then Audio Hijack</title>
+<meta name="description" content="A manual setup note: route all Mac sound through BlackHole 2ch first, then use Audio Hijack to duck that sound against an output device.">
 <style>
-:root {
-  --bg: #1a0c0c; --panel: #2a1412; --ink: #f0e6d6;
-  --mut: #381b18;
-  --acc: #c9a24b; --acc2: #94b2c4;
-  --line: #2a1412;
-}
+@font-face { font-family: Archivo; src: url(fonts/Archivo.ttf); }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font-family: 'Book Antiqua', Georgia, serif; line-height: 1.55; }
-code, pre, .mono { font-family: 'Andale Mono', monospace; }
-a { color: var(--acc2); }
-.hero { padding: 3rem 6vw 1rem; }
-.hero img.banner { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; }
-.logo { width: 92px; height: 92px; border-radius: 18px;
-  border: 1px solid var(--line); }
-h1 { font-size: 2.4rem; margin: 0.4em 0 0.1em; }
-h2 { border-bottom: 2px solid var(--acc); padding-bottom: 0.2em;
-  margin-top: 2em; }
-.lede { font-size: 1.15rem; max-width: 62ch; }
-main { padding: 0 6vw 3rem; max-width: 1180px; margin: 0 auto; }
-.grid { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line);
-  border-radius: 12px; padding: 1rem 1.2rem; }
-.card.pop { animation: rise 0.7s ease both; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; } }
-pre.code { background: #101014; color: #e8e6df; padding: 1rem 1.2rem;
-  border-radius: 12px; overflow-x: auto; font-size: 0.86rem;
-  border-left: 5px solid var(--acc); }
-table { border-collapse: collapse; width: 100%; }
-td, th { border-bottom: 1px solid var(--line); padding: 0.45rem 0.6rem;
-  text-align: left; }
-.shots { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.shots img { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; background: #f4f1e8; }
-footer { padding: 2rem 6vw; border-top: 1px solid var(--line);
-  color: var(--mut); }
-.rail { display: flex; gap: 1.2rem; align-items: flex-start; }
-.rail nav { position: sticky; top: 1rem; min-width: 180px; }
-@media (max-width: 760px) { .rail { flex-direction: column; }
-  .rail nav { position: static; } }
-@media (prefers-reduced-motion: reduce) {
-  .card.pop { animation: none; } * { scroll-behavior: auto; } }
+body { margin: 0; background: #f6f0e2; color: #2c2620; font-family: Archivo, sans-serif; line-height: 1.6; }
+.day { max-width: 820px; margin: 0 auto; padding: 0 20px 60px; }
+header { padding: 44px 0 6px; text-align: center; }
+header img.intro { width: 100%; height: auto; display: block; }
+h1 { color: #2654a0; letter-spacing: .04em; font-size: 1.7rem; margin: 24px 0 8px; }
+h2 { color: #2654a0; margin: 0 0 8px; font-size: 1.15rem; }
+.lede { max-width: 60ch; margin: 0 auto; font-size: 1.08rem; }
+.spine { border-left: 6px solid transparent; border-image: repeating-linear-gradient(180deg, #2654a0 0 26px, #f6f0e2 26px 40px, #fff 40px 52px) 6; margin-top: 30px; padding-left: 26px; }
+.stage { margin: 0 0 34px; position: relative; }
+.num { position: absolute; left: -47px; top: 2px; width: 34px; height: 34px; border-radius: 50%; background: #2654a0; color: #fff; text-align: center; line-height: 34px; font-weight: 700; }
+.timber { border: 8px solid #7a5430; background: #fbf7ec; padding: 14px 18px; }
+.timber pre { margin: 0; overflow-x: auto; font-family: ui-monospace, Menlo, monospace; }
+.tab { display: inline-block; background: #f6f0e2; color: #2654a0; border: 2px solid #b9ac90; border-top: 12px solid #2654a0; padding: 9px 20px 11px; margin: 6px 8px 6px 0; text-decoration: none; position: relative; }
+.tab:hover { transform: translateY(-2px); border-top-color: #1d4076; }
+.tab:active { box-shadow: inset 0 -3px 0 #e86e1e; }
+.tab:focus-visible { outline: none; box-shadow: inset 0 3px 0 #e86e1e; }
+a.sash { color: #2654a0; text-decoration: none; }
+a.sash::before { content: ""; display: inline-block; width: 14px; height: 9px; margin-right: 7px; background: linear-gradient(135deg, #2654a0 50%, #fff 50%); border: 1px solid #2654a0; }
+a.sash:hover::before { width: 20px; }
+.notice { background: #fbf7ec; border: 2px solid #a98f66; padding: 12px 16px; }
+.fuse { color: #e86e1e; font-weight: 700; }
+.tick { color: #5da24e; font-weight: 700; }
+.ash { border: 0; height: 12px; background: #c9c4ba; margin: 30px 0; position: relative; }
+.ash::after { content: "🌱"; position: absolute; left: 50%; top: -12px; font-size: 14px; }
+footer { text-align: center; color: #6a6154; }
 </style>
 </head>
-<body class="layout-note">
-<!-- This page exists for macOS-Audio-Ducking-Setup alone: the layout (notebook),
-     the colors, and the type were picked for this project, not
-     shared with the other project pages. The code block below is
-     copied from the file it names, line for line. If it looks
-     plain, that is because the project is plain, and I would
-     rather the page match the project than dress it up. The one
-     thing I will not do here is oversell: what this project does
-     not do is stated on the page, not hidden from it. -->
-<header class="hero">
-  <img class="logo" src="assets/logo.png" alt="macOS Audio Ducking Setup logo">
-  <img class="banner" src="assets/banner.png" alt="">
-  <h1>macOS Audio Ducking Setup</h1>
-  <p class="mono"><a href="https://github.com/Epsilon0xCell/macOS-Audio-Ducking-Setup">github.com/Epsilon0xCell/macOS-Audio-Ducking-Setup</a></p>
+<body>
+<div class="day">
+<header>
+  <img class="intro" src="intro-banner.png" alt="The Boogg snowman on his pyre in Sechselautenplatz before the bell: small head, blue and white sash, guild ring, horsemen gathering, the Grossmunster towers across the river">
+  <h1>macOS-Audio-Ducking-Setup</h1>
+  <p class="lede">This note routes all Mac sound through the BlackHole 2ch virtual driver first, then uses Rogue Amoeba's Audio Hijack to duck that sound against an output device, so foreground audio stays clear while everything else drops in level beneath it. This repo is a setup note, not a script: the steps are manual settings in the two apps, in this order, on purpose.</p>
+  <p><a class="tab" href="#stage1">Stage one</a><a class="tab" href="#stage2">Stage two</a><a class="tab" href="#stage3">The bell test</a></p>
 </header>
-
-<main>
-  <section class="rail">
-    <nav aria-label="on this page">
-      <p class="mono"><a href="#run">Run it</a><br>
-      <a href="#files">The files</a><br>
-      <a href="#sheets">The sheets</a><br>
-      <a href="https://github.com/Epsilon0xCell/macOS-Audio-Ducking-Setup">The repo</a></p>
-    </nav>
-    <div>
-      <p class="lede">macOS Audio Ducking Setup is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.</p>
-      <div class="grid">
-        <div class="card pop"><h3>What it is</h3>
-          <p>macOS Audio Ducking Setup: 1 files, 10 counted
-          lines across Markdown 10. One job, done in the
-          open, in files you can read.</p></div>
-        <div class="card pop"><h3>The biggest piece</h3>
-          <p><code>README.md</code> carries the most
-          lines. If the project grows, that file is where the growth
-          lands first, for better or worse.</p></div>
-        <div class="card pop"><h3>The honest gap</h3>
-          <p>No test files yet. That is the honest gap, and the roadmap in the visuals folder says what the first one should cover.</p></div>
-      </div>
-      <section id="run">
-        <h2>Run it</h2>
-        <p>The repo README has the exact commands for this one. The
-        shape is the shape for most of my projects: clone it, read the
-        top file first so you know what will happen, then run it on
-        something you do not mind breaking.</p>
-        <p class="mono">$ git clone https://github.com/Epsilon0xCell/macOS-Audio-Ducking-Setup.git<br>$ cd macOS-Audio-Ducking-Setup</p>
-      </section>
-      
-  <section aria-label="real code">
-    <h2>The code, as it sits in the repo</h2>
-    <p>From <code>README.md</code>, line 1 on. I did
-    not tidy it for the page. What you see is what the file has.</p>
-    <pre class="code"><code># macOS-Audio-Ducking-Setup
-macOS audio ducking setup blackhole + audio hijack
-
-# To setup
-Set the system-wide audio output to the blackhole 2ch driver and then setup audio hijack with an output device and audio ducking.
-
-```
-https://github.com/ExistentialAudio/BlackHole
-https://rogueamoeba.com/audiohijack/
-```</code></pre>
-  </section>
-      <section id="files">
-        <h2>The files that matter</h2>
-        <table><tr><th>File</th><th>Lines</th></tr>
-        <tr><td><code>README.md</code></td><td>10</td></tr>
-        </table>
-        <p>Names doing the work: <span class="mono">no named functions in the snapshot</span>.</p>
-      </section>
-      <section id="sheets">
-        <h2>Drawn by hand</h2>
-        <p>I sketch my projects on notebook paper so I have to
-        understand them well enough to draw them. The full set,
-        with the counts and how they were counted, is the
-        <a href="https://github.com/Epsilon0xCell/macOS-Audio-Ducking-Setup/tree/main/macOS-Audio-Ducking-Setup-Visuals">macOS-Audio-Ducking-Setup-Visuals</a>
-        folder in the repo. Nothing is drawn over the binder holes.
-        That is a rule, not a style.</p>
-        <div class="shots">
-          <img src="assets/architecture.png" alt="Hand drawn architecture sheet for macOS Audio Ducking Setup">
-          <img src="assets/flowchart.png" alt="Hand drawn flowchart sheet for macOS Audio Ducking Setup">
-          <img src="assets/product-map.png" alt="Hand drawn product map sheet for macOS Audio Ducking Setup">
-        </div>
-      </section>
-    </div>
-  </section>
-</main>
+<div class="spine">
+<section class="stage" id="stage1">
+  <div class="num">1</div>
+  <h2>First stage: building the pyre</h2>
+  <p>Install and select BlackHole 2ch as the system output, so every application feeds one common stream into the chain instead of scattering across devices.</p>
+  <div class="timber"><pre>System output: BlackHole 2ch
+https://github.com/ExistentialAudio/BlackHole</pre></div>
+  <p class="notice"><span class="fuse">●</span> BlackHole on its own is silent plumbing. Choosing it as output without the rest of the chain means hearing nothing. That silence is the setup's most common first panic, and it does not mean anything is broken.</p>
+</section>
+<hr class="ash">
+<section class="stage" id="stage2">
+  <div class="num">2</div>
+  <h2>Second stage: raising the snowman</h2>
+  <p>Build the Audio Hijack session that receives the BlackHole stream, applies the ducking against the chosen output device, and passes the result onward to the hardware the listener actually hears through. Walk the session block by block: input first, ducking control next, output last.</p>
+  <div class="timber"><pre>Input: BlackHole 2ch stream
+Ducking: against the chosen output device
+Output: the real listening device
+https://rogueamoeba.com/audiohijack/</pre></div>
+  <p>The level drop is a dip rather than a mute: the background sound steps down, it does not vanish, exactly as a festival crowd drops its noise when the bell begins without ever falling fully silent. If Audio Hijack is set up before the system output points at BlackHole, it has no system sound coming in to duck.</p>
+</section>
+<hr class="ash">
+<section class="stage" id="stage3">
+  <div class="num">3</div>
+  <h2>Third stage: the bell test</h2>
+  <p><span class="tick">✓</span> Play ordinary system audio and confirm it arrives through the output device.<br>
+  <span class="tick">✓</span> Trigger the foreground source and confirm the bed drops.<br>
+  <span class="tick">✓</span> Stop the foreground source and confirm the bed returns smoothly.</p>
+  <p>Troubleshoot in festival order too: no sound at all points back to the BlackHole stage, no dip points to the Hijack session, and a dip that never returns points to the output selection.</p>
+  <p><a class="sash" href="https://github.com/ExistentialAudio/BlackHole">BlackHole on GitHub</a><br>
+  <a class="sash" href="https://rogueamoeba.com/audiohijack/">Audio Hijack at Rogue Amoeba</a><br>
+  <a class="sash" href="https://github.com/Epsilon0xCell/macOS-Audio-Ducking-Setup">This repository</a></p>
+</section>
+</div>
 <footer>
-  <p>macOS Audio Ducking Setup is one of my projects. This page was written
-  from the repo itself on 2026-10-30: the counts are the
-  repo's counts, the code is the repo's code, and the gaps are the
-  repo's gaps.</p>
+  <p>After the burn: a low ash mound, spring grass at its edge, and speech riding clean over a lowered bed of music.</p>
 </footer>
+</div>
 </body>
 </html>
