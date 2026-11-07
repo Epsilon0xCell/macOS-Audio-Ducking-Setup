@@ -1,8 +1,10 @@
-![Intro](intro-banner.png)
+![Intro: a line of ducks crossing a misty pond at dawn, the lead duck rising out of the water under a low arch of reeds and shaking off droplets inside a ring of ripples, gold reeds and pink dawn light](intro-banner.png)
 
 # macOS-Audio-Ducking-Setup
 
-![Banner](banner.png)
+<p align="center"><img src="logo.png" alt="macOS-Audio-Ducking-Setup logo: the silhouette of a single duck at dawn dipping its head beneath still pond water, one ring of ripples spreading from the dip, reeds at the edges and soft pink sky in the water" width="200"></p>
+
+![Banner: a misty pond at dawn with a line of ducks crossing the frame, the lead duck dipping its bill at a low arch of golden reeds while the others swim level behind it, pink sky reflected in the still water](banner.png)
 
 ![Scene](scene.svg)
 
